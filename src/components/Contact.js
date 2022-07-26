@@ -71,7 +71,10 @@ const Contact = () => {
                     <h1 className="text-center">Contact</h1>
                     <hr />
 
-                    <form>
+                    <div className="card">
+                        <div className="card-body shadow">
+                            <h5 className="card-title">Contact Form</h5>
+                            <form>
                         {alert && <div className={`alert alert-${alert.type}`} role="alert" style={{ 'height': '50px' }}>
                             {alert.message}
                         </div>}
@@ -89,6 +92,8 @@ const Contact = () => {
                         </div>
                         <button type="submit" onClick={handleSubmit} className="btn btn-primary">Submit</button>
                     </form>
+                    </div>
+                    </div>
 
                 </div>
             </div>

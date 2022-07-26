@@ -116,7 +116,7 @@ const Create_post = (props) => {
         <div className="container">
             <div className="row">
                 <div className="col-lg-8 mx-auto mt-5">
-                    <div className="card">
+                    <div className="card shadow">
                         <div className="card-header"> <h2 className="card-title">{title}
                         <Link  to="/crud/list" className="btn btn-primary btn-sm float-right">List</Link>
                         </h2>
