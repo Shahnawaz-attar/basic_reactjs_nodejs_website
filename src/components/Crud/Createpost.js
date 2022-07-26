@@ -9,12 +9,14 @@ const Create_post = (props) => {
     const navigate = useNavigate()
 
     const [title, setTitle] = useState('Create Post')
+    const [fileName, setFileName] = useState('')
 
     const [form, setForm] = useState({
         name: "",
         email: "",
         message: "",
-        _id : ""
+        _id : "",
+        file: ""
     })
     const [alert, setAlert] = useState({
         type: '',
@@ -28,6 +30,13 @@ const Create_post = (props) => {
 
         })
     }
+    const handleFileChange = (e) => {
+        setForm({
+            ...form,
+            file: e.target.files[0]
+        })
+        setFileName(e.target.files[0].name)
+    }
 
 
 
@@ -40,7 +49,15 @@ const Create_post = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(API_URL, form).then(res => {
+        const formData = new FormData();
+        formData.append('name', form.name);
+        formData.append('email', form.email);
+        formData.append('message', form.message);
+        formData.append('file', form.file);
+        formData.append('id', id);
+        let isUpdate = id ? true : false;
+        formData.append('isUpdate', isUpdate);
+        axios.post(API_URL, formData).then(res => {
             if (res.data.status) {
                 ShowAler({
                     type: 'success',
@@ -50,6 +67,13 @@ const Create_post = (props) => {
                     navigate('/crud/list')
                 } , 2000);
 
+                setForm({ name: '', email: '', message: '' , _id : ''})
+                setTimeout(() => {
+                    setAlert({ type: '', message: '' })
+                }, 3000)
+
+                setFileName('')
+
             } else {
                 ShowAler({
                     type: 'danger',
@@ -57,10 +81,7 @@ const Create_post = (props) => {
                 })
             }
 
-            setForm({ name: '', email: '', message: '' , _id : ''})
-            setTimeout(() => {
-                setAlert({ type: '', message: '' })
-            }, 3000)
+         
 
         }).catch(err => {
             console.log(err)
@@ -116,6 +137,16 @@ const Create_post = (props) => {
                                     <label>Email</label>
                                     <input type="email" className="form-control" placeholder="Enter Email" value={form.email} onChange={handleChange} name='email' />
                                 </div>
+                                <div className="form-group">
+                                    <label>Upload File</label>
+                                    <input type="file" className="form-control" onChange={handleFileChange} name='file'  />
+                                </div>
+                                { id  && <div className="form-group">
+                                    <label>Your Image</label><br />
+                                        <img src={`${form.file}`} alt="file" style={{ 'height': '100px' }} />
+                                    </div>}
+                                
+
                                 <div className="form-group">
                                     <label>Message</label>
                                     <textarea className="form-control" rows="6" placeholder="Enter Message" value={form.message} onChange={handleChange} name='message'></textarea>
