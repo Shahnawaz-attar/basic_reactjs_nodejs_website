@@ -18,10 +18,10 @@ const Contact = () => {
     })
 
 
-    const ShowAler = () => {
+    const ShowAler = (data) => {
         setAlert({
-            type: 'success',
-            message: 'Your message has been sent successfully'
+            type: data.type,
+            message: data.message
         })
     }
 
@@ -38,9 +38,15 @@ const Contact = () => {
             .then(res => {
 
                 if (res.data.status) {
-                    ShowAler()
+                    ShowAler({
+                        type: 'success',
+                        message: 'Your message has been sent successfully'
+                    })
                 } else {
-                    ShowAler()
+                    ShowAler({
+                        type: 'danger',
+                        message: 'Something went wrong'
+                    })
                 }
 
                 setContact({ name: '', email: '', message: '' })

@@ -6,6 +6,8 @@ import About from './components/About';
 import { Home } from './components/Home';
 import Myblogs from './components/Myblogs';
 import Contact from './components/Contact';
+import Createpost from './components/Crud/Createpost';
+import Listpost from './components/Crud/Listpost';
 
 function App() {
   return (
@@ -16,6 +18,9 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="myblogs" element={<Myblogs />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="crud" element={<Createpost />} />
+        <Route path="crud/list" element={<Listpost />} />
+        <Route path="crud/edit/:id" element={<Createpost />} />
       </Routes>
     </Router>
   );
